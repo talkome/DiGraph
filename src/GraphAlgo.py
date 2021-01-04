@@ -1,6 +1,8 @@
 import json
 import math
+import random
 from typing import List
+import matplotlib.pyplot as plt
 
 from src.DiGraph import DiGraph
 from src.GraphAlgoInterface import GraphAlgoInterface
@@ -29,10 +31,12 @@ class GraphAlgo(GraphAlgoInterface):
         @param file_name: The path to the json file
         @returns True if the loading was successful, False o.w.
         """
+        load_graph = DiGraph()
+
         try:
-            with open(file_name) as file:
+            with open(file_name, 'r') as file:
                 load_file = json.load(file)
-                load_graph = DiGraph()
+
             for vertex in load_file["Nodes"]:
                 if vertex["pos"] is None:
                     load_graph.add_node(vertex["id"])
@@ -42,10 +46,11 @@ class GraphAlgo(GraphAlgoInterface):
 
             for edge in load_file["Edges"]:
                 load_graph.add_edge(edge["src"], edge["dest"], edge["w"])
+
             self.graph = load_graph
             return True
         except Exception as ex:
-            print(ex)
+            print("couldn't save to jason", ex)
             return False
         finally:
             file.close()
@@ -56,25 +61,25 @@ class GraphAlgo(GraphAlgoInterface):
         @param file_name: The path to the out file
         @return: True if the save was successful, False o.w.
         """
-        with open(file_name, 'w+') as file:
-            try:
-                result = {"Edges": [], "Nodes": []}
-                for src_node in self.graph.sons.keys():
-                    for dest_node, weight in self.graph.all_out_edges_of_node(src_node).items():
-                        result["Edges"].append({'src': src_node, 'w': weight, 'dest': dest_node})
+        try:
+            result = {"Edges": [], "Nodes": []}
+            for src_node in self.graph.sons.keys():
+                for dest_node, weight in self.graph.all_out_edges_of_node(src_node).items():
+                    result["Edges"].append({'src': src_node, 'w': weight, 'dest': dest_node})
 
-                for src_node in self.graph.get_all_v().values():
-                    if src_node.get_pos() is None:
-                        result["Nodes"].append({'pos': str((0, 0, 0)), "id": src_node.get_key()})
-                    else:
-                        result["Nodes"].append({'pos': str(src_node.get_pos()), 'id': src_node.get_key()})
+            for src_node in self.graph.get_all_v().values():
+                if src_node.get_pos() is None:
+                    result["Nodes"].append({'pos': str((0, 0, 0)), "id": src_node.get_key()})
+                else:
+                    result["Nodes"].append({'pos': str(src_node.get_pos()), 'id': src_node.get_key()})
+            with open(file_name, 'w+') as file:
                 json.dump(result, ensure_ascii=False, indent=4, fp=file)
-                return True
-            except Exception as ex:
-                print("couldn't save to jason: ", ex.__repr__())
-                return False
-            finally:
-                file.close()
+            return True
+        except Exception as ex:
+            print("couldn't save to jason", ex)
+            return False
+        finally:
+            file.close()
 
     def shortest_path(self, src: int, dest: int) -> (float, list):
         """
@@ -103,7 +108,6 @@ class GraphAlgo(GraphAlgoInterface):
                 new_node = vertices[int(s)]
                 result.append(new_node.get_key())
         result.append(dest_node.get_key())
-        result.sort(key=lambda x: x.key, reverse=False)
         return dest_node.get_weight(), result
 
     def connected_component(self, node_id: int) -> list:
@@ -117,7 +121,7 @@ class GraphAlgo(GraphAlgoInterface):
             if node_id in node_list:
                 return node_list
 
-    def connected_components(self) -> List[list]:
+    def connected_components(self) -> List[list]:  # TODO: improve
         """
         Finds all the Strongly Connected Component(SCC) in the graph.
         Complexity: O(|V|+|E|)
@@ -141,20 +145,60 @@ class GraphAlgo(GraphAlgoInterface):
                 result.append(scc)
         return result
 
-    def plot_graph(self) -> None:  # TODO: finish
+    def plot_graph(self) -> None:  # TODO: improve
         """
         Plots the graph.
         If the nodes have a position, the nodes will be placed there.
         Otherwise, they will be placed in a random but elegant manner.
         @return: None
         """
-        pass
+        graph_vertices = self.graph.get_all_v()
+        x_values = []
+        y_values = []
+        for vertex in graph_vertices.values():
+            if vertex.get_pos():
+                x_values.append(vertex.get_pos()[0])
+                y_values.append(vertex.get_pos()[1])
+            else:
+                random_x = random.uniform(35.18, 35.2)
+                random_y = random.uniform(32.1, 32.2)
+                vertex.set_pos((random_x, random_y, 0.0))
+                x_values.append(random_x)
+                y_values.append(random_y)
+
+        n = [vertex for vertex in graph_vertices.keys()]
+        fig, ax = plt.subplots()
+        ax.scatter(x_values, y_values)
+
+        for i, txt in enumerate(n):
+            ax.annotate(n[i], (x_values[i], y_values[i]))
+
+        plt.plot(x_values, y_values)
+        for vertex in graph_vertices.keys():
+            sons_list = self.graph.all_out_edges_of_node(vertex)
+            for son in sons_list:
+                x1_coordinate = graph_vertices.get(vertex).get_pos()[0]
+                y1_coordinate = graph_vertices.get(vertex).get_pos()[1]
+                x2_coordinate = graph_vertices.get(son).get_pos()[0]
+                y2_coordinate = graph_vertices.get(son).get_pos()[1]
+                plt.arrow(x1_coordinate, y1_coordinate, (x2_coordinate - x1_coordinate),
+                          (y2_coordinate - y1_coordinate), length_includes_head=True, width=0.000003,
+                          head_width=0.00016, color='k')
+
+        plt.title("Graph Result")
+        plt.xlabel("x axis")
+        plt.ylabel("y axis")
+        plt.show()
 
     def dfs(self, src, stack):
         """
-        an algorithm for traversing or searching tree or graph data1 structures.
+        an algorithm for traversing or searching tree or graph data structures.
         it starts at the given node in the graph,
-        and explores all of the connected nodes is the nodes component
+        and explores all of the connected nodes is the nodes component.
+        For each vertex we will go through all the arcs that come out of it
+        if the vertex is marked in white we will run the algorithm on it,
+        if it is marked in black we will not activate
+        Complexity: O(|V| + |E|) in the worst case
         @ param source the node from which the search will start.
         """
         vertices = self.graph.get_all_v()
@@ -170,10 +214,15 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dfs_t(self, src, stack):
         """
-         an algorithm for traversing or searching tree or graph data1 structures.
-         it starts at the given node in the graph,
-         and explores all of the connected nodes is the nodes component
-         @ param source the node from which the search will start.
+        an algorithm for traversing or searching tree or graph data structures.
+        it starts at the given node in the graph,
+        and explores all of the connected nodes is the nodes component.
+        For each vertex we will go through all the arcs that come in of it
+        because we working on the transpose graph
+        if the vertex is marked in white we will run the algorithm on it,
+        if it is marked in black we will not activate
+        Complexity: O(|V| + |E|) in the worst case
+        @ param source the node from which the search will start.
          """
         vertices = self.graph.get_all_v()
         curr_node = vertices[src]
@@ -196,6 +245,7 @@ class GraphAlgo(GraphAlgoInterface):
         mark all the vertex we passed,
         if there is a path with a minimal weight we will discover it and select this path
         each vertex we finished passing out of the priority queue
+        Complexity: O(|E| + |V|log|V|)
         @param src - The vertex we put in the priority queue
         """
         self.graph.clear()
@@ -224,19 +274,3 @@ class GraphAlgo(GraphAlgoInterface):
                         if son.get_tag() == WHITE:
                             priority_queue.append(son)
                 curr_node.set_tag(BLACK)
-
-
-g1 = GraphAlgo()
-for node in range(5):
-    g1.graph.add_node(node)
-
-g1.graph.add_edge(1, 0, 1)
-g1.graph.add_edge(0, 2, 4)
-g1.graph.add_edge(2, 1, 11)
-g1.graph.add_edge(0, 3, 7)
-g1.graph.add_edge(3, 4, 5)
-
-ans = g1.connected_components()
-print(ans)  # [[0, 1, 2], [3], [4]]
-ans = g1.connected_component(0)
-print(ans)  # [0, 1, 2]

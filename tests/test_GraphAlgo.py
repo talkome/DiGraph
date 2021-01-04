@@ -25,8 +25,9 @@ class TestGraphAlgo(TestCase):
 
     def test_shortest_path(self):
         self.assertEqual(self.g_algo.shortest_path(1, 4), (17, [1, 3, 4]))
-        self.assertEqual(self.g_algo.shortest_path(0, 3), (7, [0, 1, 3]))
-        self.assertEqual(self.g_algo.shortest_path(0, 4), (19, [0, 1, 3, 4]))
+        ans = self.g_algo.shortest_path(0, 3)
+        self.assertEqual(ans, (8, [0, 1, 3]))
+        self.assertEqual(self.g_algo.shortest_path(0, 4), (20, [0, 1, 3, 4]))
         self.assertIsNone(self.g_algo.shortest_path(0, 7))
 
     def test_connected_component(self):

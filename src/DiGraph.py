@@ -101,6 +101,7 @@ class DiGraph(GraphInterface):
         for node in self.get_all_v().values():
             node.set_tag(WHITE)
             node.set_weight(INFINITY)
+            node.set_info('')
 
     def add_edge(self, src: int, dest: int, weight: float) -> bool:
         """
