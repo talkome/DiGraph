@@ -168,10 +168,10 @@ class GraphAlgo(GraphAlgoInterface):
         stack.append(curr_node)
 
         sons_list = self.graph.all_out_edges_of_node(curr_node.get_key())
-        for vertex in sons_list:
-            son = vertices[vertex]
-            if son.get_tag() == WHITE:
-                self.dfs(son.get_key(), stack)
+        for son in sons_list:
+            vertex = vertices[son]
+            if vertex.get_tag() == WHITE:
+                self.dfs(vertex.get_key(), stack)
 
     def dfs_t(self, src, stack):
         """

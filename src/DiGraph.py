@@ -107,7 +107,7 @@ class DiGraph(GraphInterface):
         Note: If the edge already exists or one of the nodes dose not
         exists the functions will do nothing
         """
-        if not self.has_edge(src, dest):
+        if not self.has_edge(src, dest) and self.get_node(src) and self.get_node(dest):
             self.sons[src][dest] = weight
             self.fathers[dest][src] = weight
             self.edges_total += 1
@@ -161,8 +161,22 @@ class DiGraph(GraphInterface):
         Note: if the node id does not exists the function will do nothing
         """
         if self.get_node(node_id):
+            self.edges_total -= len(self.sons[node_id])
+            del self.sons[node_id]
+            self.edges_total -= len(self.fathers[node_id])
+            del self.fathers[node_id]
             self.graph_node.pop(node_id)
             self.nodes_total -= 1
+            vertices = self.get_all_v()
+            for vertex in vertices.keys():
+                sons_list = self.all_out_edges_of_node(vertex)
+                if node_id in sons_list.keys():
+                    del self.sons[vertex][node_id]
+
+                fathers_list = self.all_in_edges_of_node(vertex)
+                if node_id in fathers_list.keys():
+                    del self.fathers[vertex][node_id]
+
             self.mc += 1
             return True
         else:
