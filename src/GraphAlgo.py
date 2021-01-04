@@ -103,7 +103,7 @@ class GraphAlgo(GraphAlgoInterface):
         result.append(dest_node.get_key())
         return dest_node.get_weight(), result
 
-    def connected_component(self, id1: int) -> list:
+    def connected_component(self, id1: int) -> list:  # TODO: finish
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
         @param id1: The node id
@@ -146,7 +146,7 @@ class GraphAlgo(GraphAlgoInterface):
                 result.append(scc)
         return result
 
-    def plot_graph(self) -> None:
+    def plot_graph(self) -> None:  # TODO: finish
         """
         Plots the graph.
         If the nodes have a position, the nodes will be placed there.

@@ -41,7 +41,7 @@ class DiGraph(GraphInterface):
         @:return: true/false if there is edge between this two nodes
         """
         if src != dest and self.get_node(src) and self.get_node(dest):
-            if (src, dest) in self.sons and (dest, src) in self.fathers:
+            if dest in self.sons[src] and src in self.fathers[dest]:
                 return True
         return False
 
