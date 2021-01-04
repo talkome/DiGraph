@@ -50,7 +50,7 @@ class TestDiGraph(TestCase):
         self.assertEqual(self.my_graph.all_out_edges_of_node(3).keys(), {4})
         self.assertEqual(self.my_graph.all_out_edges_of_node(4).keys(), {3})
 
-    def test_get_mc(self):
+    def test_get_mc(self):  # TODO: fix
         self.g = DiGraph()
         for i in range(10):
             self.g.add_node(i)

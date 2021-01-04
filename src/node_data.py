@@ -45,10 +45,16 @@ class node_data:
         self.tag = tag
 
     def __str__(self):
-        return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos}, i:{self.info})"
+        if self.info == '':
+            return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos})"
+        else:
+            return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos}, i:{self.info})"
 
     def __repr__(self):
-        return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos}, i:{self.info})"
+        if self.info == '':
+            return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos})"
+        else:
+            return f"V{self.key}(w:{self.weight}, t:{self.tag}, p:{self.pos}, i:{self.info})"
 
     def __lt__(self, other):
         return self.weight < other.weight

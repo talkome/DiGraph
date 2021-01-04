@@ -22,6 +22,12 @@ class DiGraph(GraphInterface):
     def __iter__(self):
         return self.graph_node.values().__iter__()
 
+    def __str__(self):
+        return f"Graph: [MC:{self.mc}, Edges: {self.sons.values()}, Nodes: {self.graph_node.values()}]"
+
+    def __repr__(self):
+        return f"Graph: [MC:{self.mc}, Edges: {self.sons.items()}, Nodes: {self.graph_node.items()}]"
+
     def get_node(self, node_id: int) -> bool:
         """
         return true iff the graph contain this node

@@ -6,6 +6,7 @@ from GraphAlgo import GraphAlgo
 
 def check():
     """
+    TODO: check this output
         This file represents a simple function name tester.
         Make sure you run this example to check your naming.
         ***** output: ******
@@ -23,7 +24,6 @@ def check():
         inf None
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
         [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]]
-
         """
     check0()
     check1()
@@ -59,7 +59,7 @@ def check1():
     :return:
     """
     g_algo = GraphAlgo()  # init an empty graph - for the GraphAlgo
-    file = "../data1/T0.json"
+    file = "../data/T0.json"
     g_algo.load_from_json(file)  # init a GraphAlgo from a json file
     print(g_algo.connected_components())
     print(g_algo.shortest_path(0, 3))
@@ -73,7 +73,7 @@ def check2():
       :return:
       """
     g_algo = GraphAlgo()
-    file = '../data1/A5'
+    file = '../data/A5'
     g_algo.load_from_json(file)
     g_algo.get_graph().remove_edge(13, 14)
     g_algo.save_to_json(file + "_edited")
@@ -83,9 +83,9 @@ def check2():
     print(dist, path)
     dist, path = g_algo.shortest_path(20, 2)
     print(dist, path)
-    dist, path = g_algo.shortest_path(2, 20)
+    dist, path = g_algo.shortest_path(2, 20)  # TODO: check why node 20# weight is inf
     print(dist, path)
-    print(g_algo.connected_component(0))
+    # print(g_algo.connected_component(0))
     print(g_algo.connected_components())
     g_algo.plot_graph()
 

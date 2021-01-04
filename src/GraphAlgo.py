@@ -13,8 +13,8 @@ INFINITY = math.inf
 class GraphAlgo(GraphAlgoInterface):
     """This abstract class represents an interface of a graph."""
 
-    def __init__(self):
-        self.graph = DiGraph()
+    def __init__(self, graph=DiGraph()):
+        self.graph = graph
 
     def get_graph(self) -> DiGraph:
         """
@@ -95,32 +95,27 @@ class GraphAlgo(GraphAlgoInterface):
         self.dijkstra(src)
         dest_node = vertices[dest]
         dest_str = dest_node.get_info()
+        if dest_str == '':
+            return None
         str_arr = dest_str.split('->')
         for s in str_arr:
             if s.isnumeric():
                 new_node = vertices[int(s)]
                 result.append(new_node.get_key())
         result.append(dest_node.get_key())
+        result.sort(key=lambda x: x.key, reverse=False)
         return dest_node.get_weight(), result
 
-    def connected_component(self, id1: int) -> list:  # TODO: finish
+    def connected_component(self, node_id: int) -> list:
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
-        @param id1: The node id
+        @param node_id: The node id
         @return: The list of nodes in the SCC
         """
-        result = []
-        stack = []
-        self.graph.clear()
-        self.dfs(id1, stack)
-
-        self.graph.clear()
-        stack.reverse()
-        while stack:
-            curr_node = stack.pop()
-            if curr_node.get_tag() == WHITE:
-                self.dfs_t(curr_node.get_key(), result)
-        return result
+        result = self.connected_components()
+        for node_list in result:
+            if node_id in node_list:
+                return node_list
 
     def connected_components(self) -> List[list]:
         """
@@ -230,21 +225,18 @@ class GraphAlgo(GraphAlgoInterface):
                             priority_queue.append(son)
                 curr_node.set_tag(BLACK)
 
-#
-# g_algo = GraphAlgo()
-# for node in range(5):
-#     g_algo.graph.add_node(node)
-#
-# print(g_algo.graph.get_all_v().keys())
-# g_algo.graph.add_edge(1, 0, 1)
-# g_algo.graph.add_edge(0, 2, 4)
-# g_algo.graph.add_edge(2, 1, 11)
-# g_algo.graph.add_edge(0, 3, 7)
-# g_algo.graph.add_edge(3, 4, 5)
-# print(g_algo.graph.sons.keys())
-# for node in g_algo.graph.graph_node.keys():
-#     print(f"sons of {node}:", g_algo.graph.all_out_edges_of_node(node))
-#     print(f"fathers of {node}:", g_algo.graph.all_in_edges_of_node(node))
-#
-# ans = g_algo.connected_components()
-# print(ans)  # [[0,1,2],[3],[4]]
+
+g1 = GraphAlgo()
+for node in range(5):
+    g1.graph.add_node(node)
+
+g1.graph.add_edge(1, 0, 1)
+g1.graph.add_edge(0, 2, 4)
+g1.graph.add_edge(2, 1, 11)
+g1.graph.add_edge(0, 3, 7)
+g1.graph.add_edge(3, 4, 5)
+
+ans = g1.connected_components()
+print(ans)  # [[0, 1, 2], [3], [4]]
+ans = g1.connected_component(0)
+print(ans)  # [0, 1, 2]
