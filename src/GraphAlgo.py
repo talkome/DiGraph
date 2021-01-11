@@ -139,7 +139,6 @@ class GraphAlgo(GraphAlgoInterface):
                 self.dfs(vertex.get_key(), stack)
 
         self.graph.clear()
-        stack.reverse()
         while stack:
             curr_node = stack.pop()
             if curr_node.get_tag() == WHITE:
