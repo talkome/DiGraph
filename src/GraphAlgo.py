@@ -38,11 +38,14 @@ class GraphAlgo(GraphAlgoInterface):
                 load_file = json.load(file)
 
             for vertex in load_file["Nodes"]:
-                if vertex["pos"] is None:
-                    load_graph.add_node(vertex["id"])
-                else:
-                    pos = tuple(map(float, vertex["pos"][1:-1].split(',')))
-                    load_graph.add_node(vertex["id"], pos)
+                load_graph.add_node(vertex["id"])
+                if 'pos' in load_file['Nodes']:
+                    if vertex['pos']:
+                        pos = tuple(map(float, vertex["pos"][1:-1].split(',')))
+                        load_graph.add_node(vertex["id"], pos)
+                    else:
+                        pos = (0, 0, 0)
+                        load_graph.add_node(vertex["id"], pos)
 
             for edge in load_file["Edges"]:
                 load_graph.add_edge(edge["src"], edge["dest"], edge["w"])
@@ -101,7 +104,7 @@ class GraphAlgo(GraphAlgoInterface):
         dest_node = vertices[dest]
         dest_str = dest_node.get_info()
         if dest_str == '':
-            return None
+            return dest_node.get_weight(),None
         str_arr = dest_str.split('->')
         for s in str_arr:
             if s.isnumeric():
