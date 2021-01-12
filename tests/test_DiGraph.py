@@ -27,7 +27,7 @@ class TestDiGraph(TestCase):
 
     def test_v_size(self):
         vertices = self.my_graph.get_all_v()
-        self.assertEqual(len(vertices.keys()), self.my_graph.nodes_total)
+        self.assertEqual(len(vertices.keys()), self.my_graph.vertices_total)
 
     def test_e_size(self):
         self.my_graph.remove_edge(0, 2)

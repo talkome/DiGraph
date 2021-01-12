@@ -12,21 +12,21 @@ class DiGraph(GraphInterface):
     """This abstract class represents an interface of a graph."""
 
     def __init__(self):
-        self.graph_node = dict()
+        self.graph_vertices = dict()
         self.sons = dict()
         self.fathers = dict()
-        self.nodes_total = 0
+        self.vertices_total = 0
         self.edges_total = 0
         self.mc = 0
 
     def __iter__(self):
-        return self.graph_node.values().__iter__()
+        return self.graph_vertices.values().__iter__()
 
     def __str__(self):
-        return f"Graph: [MC:{self.mc}, Edges: {self.sons.values()}, Nodes: {self.graph_node.values()}]"
+        return f"Graph: [MC:{self.mc}, Edges: {self.sons.values()}, Nodes: {self.graph_vertices.values()}]"
 
     def __repr__(self):
-        return f"Graph: [MC:{self.mc}, Edges: {self.sons.items()}, Nodes: {self.graph_node.items()}]"
+        return f"Graph: [MC:{self.mc}, Edges: {self.sons.items()}, Nodes: {self.graph_vertices.items()}]"
 
     def get_node(self, node_id: int) -> bool:
         """
@@ -34,7 +34,7 @@ class DiGraph(GraphInterface):
         @:param: node_id: node_data key
         @:return: true/false if there is edge between this two nodes
         """
-        if node_id in self.graph_node.keys():
+        if node_id in self.graph_vertices.keys():
             return True
         else:
             return False
@@ -56,7 +56,7 @@ class DiGraph(GraphInterface):
         Returns the number of vertices in this graph
         @return: The number of vertices in this graph
         """
-        return self.nodes_total
+        return self.vertices_total
 
     def e_size(self) -> int:
         """
@@ -70,7 +70,7 @@ class DiGraph(GraphInterface):
         return a dictionary of all the nodes in the Graph,
         each node is represented using a pair  (key, node_data)
         """
-        return self.graph_node
+        return self.graph_vertices
 
     def all_in_edges_of_node(self, node_id: int) -> dict:
         """
@@ -98,10 +98,11 @@ class DiGraph(GraphInterface):
         """
         this method clear the nodes information in the graph
         """
-        for node in self.get_all_v().values():
-            node.set_tag(WHITE)
-            node.set_weight(INFINITY)
-            node.set_info('')
+        vertices = self.get_all_v().values()
+        for vertex in vertices:
+            vertex.set_tag(WHITE)
+            vertex.set_weight(INFINITY)
+            vertex.set_info('')
 
     def add_edge(self, src: int, dest: int, weight: float) -> bool:
         """
@@ -150,10 +151,10 @@ class DiGraph(GraphInterface):
         Note: if the node id already exists the node will not be added
         """
         if not self.get_node(node_id):
-            self.graph_node[node_id] = node_data(node_id, pos)
+            self.graph_vertices[node_id] = node_data(node_id, pos)
             self.sons[node_id] = {}
             self.fathers[node_id] = {}
-            self.nodes_total += 1
+            self.vertices_total += 1
             self.mc += 1
             return True
         else:
@@ -172,8 +173,8 @@ class DiGraph(GraphInterface):
             del self.sons[node_id]
             self.edges_total -= len(self.fathers[node_id])
             del self.fathers[node_id]
-            self.graph_node.pop(node_id)
-            self.nodes_total -= 1
+            self.graph_vertices.pop(node_id)
+            self.vertices_total -= 1
             vertices = self.get_all_v()
             for vertex in vertices.keys():
                 sons_list = self.all_out_edges_of_node(vertex)

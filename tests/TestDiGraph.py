@@ -25,7 +25,7 @@ def check0():
     my_graph.remove_node(2)
     num_of_nodes = 4
     print(num_of_nodes, my_graph.v_size)
-    print("graph:", my_graph.graph_node.keys())
+    print("graph:", my_graph.graph_vertices.keys())
 
     print("sons:", my_graph.sons.keys())
     print("fathers:", my_graph.fathers.keys())
@@ -36,7 +36,7 @@ def check0():
     print("remove edge (0,1)")
     print("sons:", my_graph.sons.keys())
     print("fathers:", my_graph.fathers.keys())
-    print(my_graph.graph_node.keys())
+    print(my_graph.graph_vertices.keys())
 
 
 def check1():

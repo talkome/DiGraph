@@ -104,7 +104,7 @@ class GraphAlgo(GraphAlgoInterface):
         dest_node = vertices[dest]
         dest_str = dest_node.get_info()
         if dest_str == '':
-            return dest_node.get_weight(),None
+            return dest_node.get_weight(), None
         str_arr = dest_str.split('->')
         for s in str_arr:
             if s.isnumeric():
@@ -124,7 +124,7 @@ class GraphAlgo(GraphAlgoInterface):
             if node_id in node_list:
                 return node_list
 
-    def connected_components(self) -> List[list]:  # TODO: improve
+    def connected_components(self) -> List[list]:  # TODO: check if it necessary
         """
         Finds all the Strongly Connected Component(SCC) in the graph.
         Complexity: O(|V|+|E|)
@@ -157,6 +157,7 @@ class GraphAlgo(GraphAlgoInterface):
         graph_vertices = self.graph.get_all_v()
         x_values = []
         y_values = []
+
         for vertex in graph_vertices.values():
             if vertex.get_pos():
                 x_values.append(vertex.get_pos()[0])
@@ -174,8 +175,8 @@ class GraphAlgo(GraphAlgoInterface):
 
         for i, txt in enumerate(n):
             ax.annotate(n[i], (x_values[i], y_values[i]))
+        plt.plot(x_values, y_values, color='k')
 
-        plt.plot(x_values, y_values)
         for vertex in graph_vertices.keys():
             sons_list = self.graph.all_out_edges_of_node(vertex)
             for son in sons_list:
@@ -184,12 +185,15 @@ class GraphAlgo(GraphAlgoInterface):
                 x2_coordinate = graph_vertices.get(son).get_pos()[0]
                 y2_coordinate = graph_vertices.get(son).get_pos()[1]
                 plt.arrow(x1_coordinate, y1_coordinate, (x2_coordinate - x1_coordinate),
-                          (y2_coordinate - y1_coordinate), length_includes_head=True, width=0.000003,
-                          head_width=0.00016, color='k')
+                          (y2_coordinate - y1_coordinate), width=0.000006)
 
-        plt.title("Graph Result")
+        plt.plot(x_values, y_values, color='r', marker='o')
+
+        plt.grid()
+        plt.tight_layout()
         plt.xlabel("x axis")
         plt.ylabel("y axis")
+        plt.title("Graph Result")
         plt.show()
 
     def dfs(self, src, stack):
