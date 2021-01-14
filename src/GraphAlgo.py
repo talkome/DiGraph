@@ -148,7 +148,7 @@ class GraphAlgo(GraphAlgoInterface):
                 result.append(scc)
         return result
 
-    def plot_graph(self) -> None:  # TODO: improve
+    def plot_graph(self) -> None:
         """
         Plots the graph.
         If the nodes have a position, the nodes will be placed there.

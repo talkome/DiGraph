@@ -85,13 +85,13 @@ def check3():
     g3.graph.add_edge(3, 7, 22)
     g3.graph.add_edge(7, 3, 13)
 
-    print(g3.connected_components())  # [[0], [1, 6, 2, 3, 7], [4, 5]]
+    print(g3.connected_components())  # [[5, 4], [7, 3], [6, 2, 1], [0]]
     print(g3.connected_component(0))  # [0]
-    print(g3.connected_component(3))  # [1, 6, 2, 3, 7]
+    print(g3.connected_component(3))  # [7, 3]
 
 
 if __name__ == '__main__':
     # check0()
-    # check1()
+    check1()
     # check2()
-    check3()
+    # check3()
