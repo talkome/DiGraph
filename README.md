@@ -34,12 +34,12 @@
  * Let's create a new graph from a json file.
   
  ## Connected Components
- - Create an empty stack S’ and do DFS traversal of a graph. In DFS traversal,
- - after calling DFS for adjacent vertices of a vertex, 
- - push the vertex to stack.
+ - Create an empty stack S’ and do DFS traversal of a graph. 
+ - In DFS traversal,after calling DFS for adjacent vertices of a vertex, push the vertex to stack.
  - reverse the insertions direction in the stack 
  - Reverse directions of all arcs to obtain the transpose graph.
  - One by one pop a vertex from S while S is not empty.
+ - activate DFS on the transpose graph 
  * Complexity:  
     * takes O(|V| + |E|) for a graph represented using adjacency list.
     * Reversing a graph also takes O(|V| + |E|) time. 
