@@ -164,11 +164,11 @@ class GraphAlgo(GraphAlgoInterface):
                 x_points.append(vertex.get_pos()[0])
                 y_points.append(vertex.get_pos()[1])
             else:
-                x_random = random.randrange(0, 100)
-                y_random = random.randrange(0, 100)
-                vertex.set_pos((x_random, y_random, 0))
-                x_points.append(x_random)
-                y_points.append(y_random)
+                rand_x = random.randrange(0, 100)
+                rand_y = random.randrange(0, 100)
+                vertex.set_pos((rand_x, rand_y, 0))
+                x_points.append(rand_x)
+                y_points.append(rand_y)
 
         n = [vertex for vertex in graph_vertices.keys()]
         fig, ax = plt.subplots()
