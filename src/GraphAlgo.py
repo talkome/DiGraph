@@ -139,7 +139,6 @@ class GraphAlgo(GraphAlgoInterface):
                 self.dfs(vertex.get_key(), stack)
 
         self.graph.clear()
-        # stack.reverse()  # TODO: check why
         while stack:
             t = stack.pop()
             curr_node = vertices[t]
@@ -243,12 +242,13 @@ class GraphAlgo(GraphAlgoInterface):
         dfs_stack = [start_node]
         while dfs_stack:
             curr_node = dfs_stack.pop()
-            sons_list = self.graph.all_in_edges_of_node(curr_node.get_key())
-            for son in sons_list:
-                vertex = vertices[son]
+            fathers_list = self.graph.all_in_edges_of_node(curr_node.get_key())
+            for father in fathers_list:
+                vertex = vertices[father]
                 if vertex.get_tag() == WHITE:
                     vertex.set_tag(BLACK)
                     dfs_stack.append(vertex)
+                    break
 
             stack.append(curr_node.get_key())
 
