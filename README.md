@@ -3,7 +3,7 @@
 
  this project represents an infrastructure of 
  algorithms for creating of directional weighted positive graph 
-* implement Python, base on NetworkX library
+* implement on Python, base on NetworkX library
 
  ## node_data 
  This class represents the set of operations applicable on a 
