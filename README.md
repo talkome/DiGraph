@@ -88,6 +88,64 @@
       if there is a path with a minimal weight we will discover it and select this path
       each vertex we finished passing out of the priority queue
   * Complexity: O(|E|log|V| + |V|)
+  
+  Runtime Comparations
+====================
+## Graph no pos 
+
+| G_10_80_0            | Python | java | NetworkX |
+| :--------- | ----------: | :----------: | :----------: |
+| shortest path        | 0.0001 | 5 | 2.656 |
+| connected component  | 6.994 | 51 | 9.201 |
+| connected components | 7.7201 | 48 | 9.201 |
+| G_100_800_0 
+| shortest path        | 0.0025| 4 | 4.9723|
+| connected component  | 0.00071 | 48 | 1.5484 |
+| connected components | 0.00076 | 32 | 1.5484 |
+| G_1000_8000_0       
+| shortest path        | 0.08245 | 10 | 7.9673 |
+| connected component  | 0.0039 | 75 | 6.8919 |
+| connected components | 0.003738 | 73 | 6.8919 |
+| G_10000_80000_0      
+| shortest path        | 7.64449 | 58 | 0.00012 |
+| connected component  | 0.0573	| 193 | 1.0853 | 
+| connected components | 0.05754| 189	| 1.0853 | 
+| G_20000_160000_0     
+| shortest path | 32.259799	| 56	| 0.0002812 |
+| connected component 	| 0.1195588	| 188	| 1.3542 |
+| connected components	| 0.1076574	| 182	|1.3542|
+| G_30000_240000_0     
+|shortest path 	|93.2501444	|79	|0.00025468	|
+|connected component 	|0.181145047	|255	|1.389299723	|
+|connected components	|0.18190369	|274	|1.389299723	|
+
+## Graph on circle 
+
+| G_10_80_1 | Python | java | NetworkX |
+| :--------- | ----------: | :----------: | :----------: |		
+|shortest path 	|7.08282	|6	|1.487059|
+|connected component| 	3.84071	|44	|9.3060007|
+|connected components	|4.3028001	|43	|9.3060007|
+|G_100_800_1			
+|shortest path 	|0.001246	|4	|2.55473|
+|connected component 	|0.0003487	|37	|8.44399|
+|connected components	|0.0003899	|34	|8.44399|
+|G_1000_8000_1			
+|shortest path 	|0.08029	|10	|5.7134|
+|connected component 	|0.003356229	|72	|6.602000212|
+|connected components	|0.00363	|63	|6.602000212|
+|G_10000_80000_1			
+|shortest path 	|7.3867	|46	|0.00014271|
+|connected component 	|0.0472731	|166	|1.11510016|
+|connected components	|0.0447415	|158	|1.11510016|
+|G_20000_160000_1			
+|shortest path 	|30.66032524	|41	|0.00024091|
+|connected component 	|0.1211118	|191	|1.5159999|
+|connected components	|0.1095079	|181	|1.5159999|
+|G_30000_240000_1			
+|shortest path 	|90.6683008	|55	|0.0002582|
+|connected component 	|0.180592	|277	|0.181647052|
+|connected components	|0.181647052	|263	|0.181647052 |
  
  ## How to run 
  * Click the green Clone or Download button on the right. 
