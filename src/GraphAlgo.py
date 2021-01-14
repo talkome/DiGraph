@@ -195,44 +195,6 @@ class GraphAlgo(GraphAlgoInterface):
         plt.ylabel("y axis")
         plt.title("Graph Result")
         plt.show()
-        # graph_vertices = self.graph.get_all_v()
-        # x_values = []
-        # y_values = []
-        #
-        # for vertex in graph_vertices.values():
-        #     if vertex.get_pos():
-        #         x_values.append(vertex.get_pos()[0])
-        #         y_values.append(vertex.get_pos()[1])
-        #     else:
-        #         vertex.set_pos((random.uniform(35.18, 35.2), random.uniform(31.1, 32.2), 0))
-        #         x_values.append(random.uniform(35.18, 35.2))
-        #         y_values.append(random.uniform(31.1, 32.2))
-        #
-        # n = [vertex for vertex in graph_vertices.keys()]
-        # fig, ax = plt.subplots()
-        # ax.scatter(x_values, y_values)
-        #
-        # for i, txt in enumerate(n):
-        #     ax.annotate(n[i], (x_values[i], y_values[i]))
-        # plt.plot(x_values, y_values, color='k')
-        #
-        # for vertex in graph_vertices.keys():
-        #     sons_list = self.graph.all_out_edges_of_node(vertex)
-        #     for son in sons_list:
-        #         x1 = graph_vertices.get(vertex).get_pos()[0]
-        #         y1 = graph_vertices.get(vertex).get_pos()[1]
-        #         x2 = graph_vertices.get(son).get_pos()[0]
-        #         y2 = graph_vertices.get(son).get_pos()[1]
-        #         plt.arrow(x1, y1, (x2 - x1), (y2 - y1), width=0.000006)
-        #
-        # plt.plot(x_values, y_values, color='r', marker='o')
-        #
-        # plt.grid()
-        # plt.tight_layout()
-        # plt.xlabel("x axis")
-        # plt.ylabel("y axis")
-        # plt.title("Graph Result")
-        # plt.show()
 
     def dfs(self, src, stack):
         """
