@@ -57,8 +57,8 @@
  * base on the dijkstra result we will set the new vertices weights, 
    and For each vertex we will select the neighbor with the lowest 
    weight and thus we will create the cheapest route
- * Complexity: O(|V|+|E|) + O(|V|) = O(|V|+|E|)
- * running BFS and then start pass from the src node, in every iteration we select the 
+ * Complexity: O(|E|log|V| + |V|) in worst case performance
+ * running Dijkstra and then start pass from the src node, in every iteration we select the 
  node with the minimal distance and move to it until we reach the destination vertex.
    
 ## Plot Graph
