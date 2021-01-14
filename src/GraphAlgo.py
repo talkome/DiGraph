@@ -120,11 +120,11 @@ class GraphAlgo(GraphAlgoInterface):
         @return: The list of nodes in the SCC
         """
         result = self.connected_components()
-        for node_list in result:
-            if node_id in node_list:
-                return node_list
+        for nodes_list in result:
+            if node_id in nodes_list:
+                return nodes_list
 
-    def connected_components(self) -> List[list]:  # TODO: check if it necessary
+    def connected_components(self) -> List[list]:
         """
         Finds all the Strongly Connected Component(SCC) in the graph.
         Complexity: O(|V|+|E|)
@@ -133,14 +133,16 @@ class GraphAlgo(GraphAlgoInterface):
         result = []
         stack = []
         self.graph.clear()
-        vertices = self.graph.get_all_v().values()
-        for vertex in vertices:
+        vertices = self.graph.get_all_v()
+        for vertex in vertices.values():
             if vertex.get_tag() == WHITE:
                 self.dfs(vertex.get_key(), stack)
 
         self.graph.clear()
+        stack.reverse()  # TODO: check why
         while stack:
-            curr_node = stack.pop()
+            t = stack.pop()
+            curr_node = vertices[t]
             if curr_node.get_tag() == WHITE:
                 scc = []
                 self.dfs_t(curr_node.get_key(), scc)
@@ -208,15 +210,20 @@ class GraphAlgo(GraphAlgoInterface):
         @ param source the node from which the search will start.
         """
         vertices = self.graph.get_all_v()
-        curr_node = vertices[src]
-        curr_node.set_tag(BLACK)
-        stack.append(curr_node)
+        start_node = vertices[src]
+        start_node.set_tag(BLACK)
+        dfs_stack = [start_node]
+        while dfs_stack:
+            curr_node = dfs_stack.pop()
+            sons_list = self.graph.all_out_edges_of_node(curr_node.get_key())
+            for son in sons_list:
+                vertex = vertices[son]
+                if vertex.get_tag() == WHITE:
+                    vertex.set_tag(BLACK)
+                    dfs_stack.append(vertex)
+                    break
 
-        sons_list = self.graph.all_out_edges_of_node(curr_node.get_key())
-        for son in sons_list:
-            vertex = vertices[son]
-            if vertex.get_tag() == WHITE:
-                self.dfs(vertex.get_key(), stack)
+            stack.append(curr_node.get_key())
 
     def dfs_t(self, src, stack):
         """
@@ -229,17 +236,21 @@ class GraphAlgo(GraphAlgoInterface):
         if it is marked in black we will not activate
         Complexity: O(|V| + |E|) in the worst case
         @ param source the node from which the search will start.
-         """
+        """
         vertices = self.graph.get_all_v()
-        curr_node = vertices[src]
-        curr_node.set_tag(BLACK)
-        stack.append(curr_node.get_key())
+        start_node = vertices[src]
+        start_node.set_tag(BLACK)
+        dfs_stack = [start_node]
+        while dfs_stack:
+            curr_node = dfs_stack.pop()
+            sons_list = self.graph.all_in_edges_of_node(curr_node.get_key())
+            for son in sons_list:
+                vertex = vertices[son]
+                if vertex.get_tag() == WHITE:
+                    vertex.set_tag(BLACK)
+                    dfs_stack.append(vertex)
 
-        sons_list = self.graph.all_in_edges_of_node(curr_node.get_key())
-        for vertex in sons_list:
-            son = vertices[vertex]
-            if son.get_tag() == WHITE:
-                self.dfs_t(son.get_key(), stack)
+            stack.append(curr_node.get_key())
 
     def dijkstra(self, src):
         """
@@ -263,7 +274,7 @@ class GraphAlgo(GraphAlgoInterface):
         priority_queue.append(start_node)
 
         while priority_queue:
-            priority_queue.sort(key=lambda x: x.weight, reverse=False)
+            priority_queue.sort(key=lambda x: x.weight, reverse=True)
             curr_node = priority_queue.pop()
             curr_node_weight = curr_node.get_weight()
             if curr_node.get_tag() == WHITE:

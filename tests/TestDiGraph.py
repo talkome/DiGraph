@@ -50,12 +50,27 @@ def check1():
     g1.graph.add_edge(0, 3, 7)
     g1.graph.add_edge(3, 4, 5)
 
-    ans = g1.connected_components()
-    print(ans)  # [[0, 1, 2], [3], [4]]
-    ans = g1.connected_component(0)
-    print(ans)  # [0, 1, 2]
+    print(g1.connected_components())  # [[0, 1, 2], [3], [4]]
+    print(g1.connected_component(0))  # [0, 1, 2]
+
+
+def check2():
+    g2 = GraphAlgo()
+    for node in range(4):
+        g2.graph.add_node(node)
+
+    g2.graph.add_edge(0, 1, 1)
+    g2.graph.add_edge(1, 0, 1.1)
+    g2.graph.add_edge(1, 3, 1.8)
+    g2.graph.add_edge(1, 2, 1.3)
+    g2.graph.add_edge(2, 3, 1.1)
+
+    print(g2.connected_components())  # [[0, 1, 2], [3], [4]]
+    print(g2.connected_component(0))  # [0, 1, 2]
+    print(g2.connected_component(3))  # [3]
 
 
 if __name__ == '__main__':
-    check0()
+    # check0()
     check1()
+    check2()

@@ -33,39 +33,11 @@ class TestGraphAlgo(TestCase):
         self.assertIsNone(path)
 
     def test_connected_component(self):
-        print(self.g_algo.connected_components())
-        self.assertEqual(self.g_algo.connected_components(), [[8], [7], [6], [5], [4, 1, 0, 2, 3]])
-
-        # g1 = GraphAlgo()
-        # for node in range(5):
-        #     g1.graph.add_node(node)
-        #
-        # print(g1.graph.get_all_v().keys())
-        # g1.graph.add_edge(1, 0, 1)
-        # g1.graph.add_edge(0, 2, 4)
-        # g1.graph.add_edge(2, 1, 11)
-        # g1.graph.add_edge(0, 3, 7)
-        # g1.graph.add_edge(3, 4, 5)
-        # print(g1.graph.sons.keys())
-        #
-        # self.assertEqual(g1.connected_components(), [[0, 1, 2], [3], [4]])
+        ans = self.g_algo.connected_components()
+        self.assertEqual([[0, 2, 1, 4, 3], [5], [6], [7], [8]], ans)
 
     def test_connected_components(self):
         self.assertEqual(self.g_algo.connected_component(0), [4, 1, 0, 2, 3])
-
-        # g2 = GraphAlgo()
-        # for node in range(5):
-        #     g2.graph.add_node(node)
-        #
-        # print(g2.graph.get_all_v().keys())
-        # g2.graph.add_edge(1, 0, 1)
-        # g2.graph.add_edge(0, 2, 4)
-        # g2.graph.add_edge(2, 1, 11)
-        # g2.graph.add_edge(0, 3, 7)
-        # g2.graph.add_edge(3, 4, 5)
-        # print(g2.graph.sons.keys())
-        #
-        # self.assertEqual(g2.connected_component(0), [0, 1, 2])
 
     def test_save_load_from_json(self):
         self.assertTrue(self.g_algo.save_to_json("../data/testCase1.txt"))
