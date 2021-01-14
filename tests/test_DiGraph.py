@@ -50,7 +50,7 @@ class TestDiGraph(TestCase):
         self.assertEqual(self.my_graph.all_out_edges_of_node(3).keys(), {4})
         self.assertEqual(self.my_graph.all_out_edges_of_node(4).keys(), {3})
 
-    def test_get_mc(self):  # TODO: fix
+    def test_get_mc(self):
         self.g = DiGraph()
         for i in range(10):
             self.g.add_node(i)
@@ -62,7 +62,7 @@ class TestDiGraph(TestCase):
 
         for i in range(6, 10):
             self.g.remove_node(i)
-        self.assertEqual(self.g.get_mc(), 36)
+        self.assertEqual(self.g.get_mc(), 23)
 
     def test_add_edge(self):
         num_of_edges = self.my_graph.e_size()
