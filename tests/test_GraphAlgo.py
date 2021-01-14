@@ -33,11 +33,10 @@ class TestGraphAlgo(TestCase):
         self.assertIsNone(path)
 
     def test_connected_component(self):
-        ans = self.g_algo.connected_components()
-        self.assertEqual([[0, 2, 1, 4, 3], [5], [6], [7], [8]], ans)
+        self.assertEqual([[8], [7], [6], [5], [4, 3, 1, 2, 0]], self.g_algo.connected_components())
 
     def test_connected_components(self):
-        self.assertEqual(self.g_algo.connected_component(0), [4, 1, 0, 2, 3])
+        self.assertEqual([4, 3, 1, 2, 0], self.g_algo.connected_component(0))
 
     def test_save_load_from_json(self):
         self.assertTrue(self.g_algo.save_to_json("../data/testCase1.txt"))
