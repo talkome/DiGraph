@@ -70,7 +70,28 @@ def check2():
     print(g2.connected_component(3))  # [3]
 
 
+def check3():
+    g3 = GraphAlgo()
+    for node in range(8):
+        g3.graph.add_node(node)
+
+    g3.graph.add_edge(1, 2, 6)
+    g3.graph.add_edge(2, 6, 7)
+    g3.graph.add_edge(6, 1, 8)
+    g3.graph.add_edge(4, 6, 13)
+    g3.graph.add_edge(4, 5, 4)
+    g3.graph.add_edge(5, 4, 7)
+    g3.graph.add_edge(3, 2, 11)
+    g3.graph.add_edge(3, 7, 22)
+    g3.graph.add_edge(7, 3, 13)
+
+    print(g3.connected_components())  # [[0], [1, 6, 2, 3, 7], [4, 5]]
+    print(g3.connected_component(0))  # [0]
+    print(g3.connected_component(3))  # [1, 6, 2, 3, 7]
+
+
 if __name__ == '__main__':
     # check0()
     # check1()
-    check2()
+    # check2()
+    check3()
