@@ -65,12 +65,12 @@ def check2():
     g2.graph.add_edge(1, 2, 1.3)
     g2.graph.add_edge(2, 3, 1.1)
 
-    print(g2.connected_components())  # [[0, 1, 2], [3], [4]]
-    print(g2.connected_component(0))  # [0, 1, 2]
+    print(g2.connected_components())  # [[2, 1, 0], [3]]
+    print(g2.connected_component(0))  # [2, 1, 0]
     print(g2.connected_component(3))  # [3]
 
 
 if __name__ == '__main__':
     # check0()
-    check1()
+    # check1()
     check2()

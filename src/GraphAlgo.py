@@ -139,6 +139,7 @@ class GraphAlgo(GraphAlgoInterface):
                 self.dfs(vertex.get_key(), stack)
 
         self.graph.clear()
+        stack.reverse()
         while stack:
             t = stack.pop()
             curr_node = vertices[t]
